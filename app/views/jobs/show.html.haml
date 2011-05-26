@@ -20,21 +20,23 @@
 
   %h4 Submitted Bids
 
-  - if can?(:manage, Job) && !@job.bids.empty? && @job.current_state.to_s == "open"
+  - if can?(:manage, Job) #&& !@job.bids.empty? && @job.current_state.to_s == "open"
     .trapper_select
-      %p Select Trapper for Job
-      = form_tag(start_job_path(@job)) do
-        = select_tag(:bid, options_for_select(@job.bids.uniq { |b| b.user.id }.collect { |b| [ b.user.email, b.id ] }))
-        = submit_tag("Start Job")
+      / %p Select Trapper for Job
+      / = form_tag(start_job_path(@job)) do
+      /   = select_tag(:bid, options_for_select(@job.bids.uniq { |b| b.user.id }.collect { |b| [ b.user.email, b.id ] }))
+      /   = submit_tag("Start Job")
+  = form_tag(start_job_path(@job)) do
 
-  - unless @job.bids.empty?
-    - @job.bids.each do |bid|
-      %div{:class=>"bid"}
-        = bid.user.email
-        = simple_format(bid.notes)
-
-  - else
-    %p There are currently no bids for this job.
+    - unless @job.bids.empty?
+  
+      - @job.bids.each do |bid|
+        = check_box_tag('job[bid_ids][], bid.id')
+        %div{:class=>"bid #{bid.workflow_state}"}
+          = bid.user.email
+          = simple_format(bid.notes)
+    - else
+      %p There are currently no bids for this job.
 
 .grid_6
   - if @job.workflow_state.to_s == "open"

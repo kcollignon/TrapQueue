@@ -161,6 +161,10 @@ table {
     margin-bottom: 2em; }
   #content .bid {
     margin-bottom: 2em; }
+  #content .bid.accepted {
+    color: green; }
+  #content .bid.awaiting {
+    color: blue; }
   #content .trapper_select {
     margin-bottom: 2em; }
     #content .trapper_select p {

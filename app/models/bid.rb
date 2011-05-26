@@ -4,7 +4,7 @@ class Bid < ActiveRecord::Base
   belongs_to :user
 
   workflow do
-    state :awating do
+    state :awaiting do
       event :decline, :transitions_to => :declined
       event :accept, :transitions_to => :accepted
     end
